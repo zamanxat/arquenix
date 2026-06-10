@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARQUENIX | Ақылды су жүйесі</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Негізгі навигация">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-mark"><i data-lucide="droplets"></i></div>
+          <div>
+            <strong>ARQUENIX</strong>
+            <span>Ақылды су жүйесі</span>
+          </div>
+        </div>
+        <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Жабу">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <nav class="nav-list">
+        <a class="nav-item active" href="#dashboard" data-section="dashboard"><span class="nav-icon"><i data-lucide="layout-dashboard"></i></span><span class="nav-label">Басты панель</span></a>
+        <a class="nav-item" href="#rain" data-section="rain"><span class="nav-icon"><i data-lucide="cloud-rain"></i></span><span class="nav-label">Жауын мониторингі</span></a>
+        <a class="nav-item" href="#forecast" data-section="forecast"><span class="nav-icon"><i data-lucide="cloud-sun"></i></span><span class="nav-label">Ауа райы болжамы</span></a>
+        <a class="nav-item" href="#irrigation" data-section="irrigation"><span class="nav-icon"><i data-lucide="sprout"></i></span><span class="nav-label">Автоматты суару</span></a>
+        <a class="nav-item" href="#water" data-section="water"><span class="nav-icon"><i data-lucide="droplet"></i></span><span class="nav-label">Су деңгейі</span></a>
+        <a class="nav-item" href="#solar" data-section="solar"><span class="nav-icon"><i data-lucide="sun"></i></span><span class="nav-label">Күн энергиясы</span></a>
+        <a class="nav-item" href="#modules" data-section="modules"><span class="nav-icon"><i data-lucide="cpu"></i></span><span class="nav-label">Ішкі / сыртқы модульдер</span></a>
+        <a class="nav-item" href="#analytics" data-section="analytics"><span class="nav-icon"><i data-lucide="bar-chart-3"></i></span><span class="nav-label">Аналитика</span></a>
+        <a class="nav-item" href="#journal" data-section="journal"><span class="nav-icon"><i data-lucide="scroll-text"></i></span><span class="nav-label">Жүйе журналы</span></a>
+        <a class="nav-item" href="#contact" data-section="contact"><span class="nav-icon"><i data-lucide="phone"></i></span><span class="nav-label">Автор байланысы</span></a>
+        <a class="nav-item" href="#settings" data-section="settings"><span class="nav-icon"><i data-lucide="settings"></i></span><span class="nav-label">Параметрлер</span></a>
+      </nav>
+
+      <section class="about-box">
+        <h2>Жүйе туралы</h2>
+        <p>Бұл сайт дипломдық жоба негізінде әзірленген жаңбыр суын жинау, сүзу, сақтау және автоматтандырылған суару жүйесінің прототиптік платформасы болып табылады.</p>
+        <div class="authors">
+          <strong>Басты автор:</strong>
+          <span>Еркінұлы Еділ</span>
+          <strong>Қосымша авторлар:</strong>
+          <span>Ерғали Алтынай, Торебекова Динара, Кулмуханова Аружан</span>
+          <strong>Ғылыми жетекші:</strong>
+          <span>Бөрібай Эльмира Сартайқызы</span>
+        </div>
+        <span>Алматы, 2026</span>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Мәзір" aria-expanded="false" aria-controls="sidebar">
+          <i data-lucide="menu"></i>
+        </button>
+        <div class="status-pill">
+          <span>Жүйе статусы:</span>
+          <strong>Белсенді</strong>
+        </div>
+        <div class="clock">
+          <strong id="clock">--:--:--</strong>
+          <span id="date">25 мамыр, 2026 ж.</span>
+        </div>
+        <div class="weather-chip">
+          <div class="weather-icon" id="weatherIcon">🌧</div>
+          <div>
+            <span id="weatherLocation">Алматы, Қазақстан</span>
+            <strong id="weatherTemp">18°C</strong>
+          </div>
+        </div>
+        <div class="metric mini"><span data-i18n="rainChance">Жаңбыр ықтималдығы</span><strong id="rainChanceTop">40%</strong></div>
+        <div class="metric mini"><span data-i18n="wind">Жел</span><strong id="windTop">10 км/сағ</strong></div>
+        <div class="metric mini"><span data-i18n="humidity">Ылғалдылық</span><strong id="humidityTop">55%</strong></div>
+      </header>
+
+      <section id="dashboard" class="view active" aria-labelledby="dashboard-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">RainGrid басқару орталығы</p>
+            <h1 id="dashboard-title">Қызметтер мен бөлімдер</h1>
+          </div>
+          <button class="ghost-button" data-open="about">Жоба негізі</button>
+          <button type="button" class="ghost-button app-link" data-open="mobile">Мобильдік қосымша</button>
+        </div>
+
+        <div class="layout-grid">
+          <section class="service-grid" aria-label="Қызметтер">
+            <article class="service-card" data-open="rain">
+              <div class="service-icon rain">☔</div>
+              <h2>Жауын көлемін тіркеу</h2>
+              <p>Tipping bucket жауынөлшегіші арқылы нақты уақыттағы жауын мөлшерін бақылау.</p>
+              <button type="button">Ашу</button>
+            </article>
+            <article class="service-card" data-open="forecast">
+              <div class="service-icon cloud">☁</div>
+              <h2>Ауа райын болжау</h2>
+              <p>Жауын ықтималдығы мен суару кестесін жоспарлауға арналған болжам.</p>
+              <button type="button">Ашу</button>
+            </article>
+            <article class="service-card" data-open="irrigation">
+              <div class="service-icon leaf">🌱</div>
+              <h2>Автоматты суару</h2>
+              <p>Топырақ ылғалдылығы мен ауа райына сүйенген интеллектуалды суару.</p>
+              <button type="button">Ашу</button>
+            </article>
+            <article class="service-card" data-open="solar">
+              <div class="service-icon sun">☀</div>
+              <h2>Күн энергиясы мониторингі</h2>
+              <p>Күн панельдерінің қуаты, өндірісі және автономия деңгейін қадағалау.</p>
+              <button type="button">Ашу</button>
+            </article>
+            <article class="service-card" data-open="water">
+              <div class="service-icon drop">💧</div>
+              <h2>Су деңгейі сенсорлары</h2>
+              <p>Цистернадағы су деңгейін, сапасын және резерв көлемін талдау.</p>
+              <button type="button">Ашу</button>
+            </article>
+            <article class="service-card" data-open="modules">
+              <div class="service-icon home">⌂</div>
+              <h2>Ішкі / сыртқы модульдер</h2>
+              <p>Температура, ылғалдылық, жел және ауа сапасы параметрлерін бақылау.</p>
+              <button type="button">Ашу</button>
+            </article>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel summary-panel">
+              <h2>Жүйе көрсеткіштері</h2>
+              <dl class="kv-list">
+                <div><dt data-i18n="rain">Бүгінгі жауын</dt><dd id="summaryRain">12.4 мм</dd></div>
+                <div><dt data-i18n="water">Су қоры</dt><dd id="summaryWater">62%</dd></div>
+                <div><dt>Су сапасы</dt><dd class="good">Жақсы</dd></div>
+                <div><dt>Суару жүйесі</dt><dd class="good">Қосулы</dd></div>
+                <div><dt data-i18n="solar">Күн энергиясы</dt><dd id="summarySolar">285 W</dd></div>
+                <div><dt data-i18n="waterSaved">Үнемделген су</dt><dd id="summarySavedWater">542.3 л</dd></div>
+              </dl>
+            </section>
+
+            <section class="panel journal-panel">
+              <div class="panel-title-row">
+                <h2>Жүйе журналы</h2>
+                <button type="button" class="text-button" data-section-link="journal">Барлығын көру</button>
+              </div>
+              <ul class="timeline">
+                <li><time>15:42</time><span>Суару жүйесі қосылды</span></li>
+                <li><time>15:35</time><span>Жауын: 0.3 мм тіркелді</span></li>
+                <li><time>15:20</time><span>Резервуар деңгейі: 62%</span></li>
+                <li><time>15:10</time><span>Күн энергиясы: 270 W</span></li>
+                <li><time>15:00</time><span>Жүйе іске қосылды</span></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+
+        <section class="dashboard-panels">
+          <article class="panel chart-card">
+            <div class="panel-title-row">
+              <h2>Жауын көлемі</h2>
+              <button type="button" class="icon-button" data-section-link="rain" aria-label="Жауын бөлімін ашу">↗</button>
+            </div>
+            <div class="stat-rail">
+              <div><span>Қазір</span><strong id="rainRateValue">0.3 мм/сағ</strong></div>
+              <div><span>Бүгін</span><strong id="rainTodayValue">12.4 мм</strong></div>
+              <div><span>Ай бойы</span><strong id="rainMonthValue">48.7 мм</strong></div>
+            </div>
+            <canvas id="rainChart" width="560" height="220" aria-label="Жауын графигі"></canvas>
+          </article>
+
+          <article class="panel forecast-card">
+            <div class="panel-title-row">
+              <h2>Ауа райын болжау</h2>
+              <button type="button" class="icon-button" data-section-link="forecast" aria-label="Болжам бөлімін ашу">↗</button>
+            </div>
+            <div class="forecast-row" id="forecastRow"></div>
+            <div class="ai-note" id="aiSuggestionsDash">
+              <strong>AI ұсынысы</strong>
+              <ul class="ai-suggestions" id="aiSuggestionsDashList"></ul>
+            </div>
+          </article>
+
+          <article class="panel irrigation-card">
+            <div class="panel-title-row">
+              <h2>Автоматты суару</h2>
+              <label class="switch">
+                <input id="systemSwitch" type="checkbox" checked>
+                <span></span>
+              </label>
+            </div>
+            <div class="control-grid">
+              <div class="metric-box"><span>Топырақ ылғалдылығы</span><strong id="soilValue">48%</strong></div>
+              <div class="metric-box"><span>Суару ұзақтығы</span><strong>20 мин</strong></div>
+              <div class="metric-box"><span>Келесі суару</span><strong>Ертең 06:30</strong></div>
+            </div>
+            <div class="zones" id="zones"></div>
+          </article>
+
+          <article class="panel chart-card">
+            <div class="panel-title-row">
+              <h2>Күн энергиясы <span class="chart-city" id="solarChartCity"></span></h2>
+              <button type="button" class="icon-button" data-section-link="solar" aria-label="Күн энергиясы бөлімін ашу">↗</button>
+            </div>
+            <div class="stat-rail compact">
+              <div><span>Қуат</span><strong id="solarPowerValue">285 W</strong></div>
+              <div><span>Бүгінгі өндіріс</span><strong id="solarEnergyValue">2.45 кВт·сағ</strong></div>
+              <div><span>Автономия</span><strong id="solarAutonomyValue">78%</strong></div>
+            </div>
+            <canvas id="solarChart" width="560" height="220" aria-label="Күн энергиясы графигі"></canvas>
+          </article>
+
+          <article class="panel water-card">
+            <div class="panel-title-row">
+              <h2>Су деңгейі</h2>
+              <button type="button" class="icon-button" data-section-link="water" aria-label="Су деңгейі бөлімін ашу">↗</button>
+            </div>
+            <div class="tank">
+              <div class="tank-fill" style="height: 62%"></div>
+              <strong>62%</strong>
+            </div>
+            <dl class="kv-list slim">
+              <div><dt>Су температурасы</dt><dd id="waterTempValue">17.3°C</dd></div>
+              <div><dt>Су сапасы</dt><dd class="good" id="waterQualityValue">Жақсы</dd></div>
+              <div><dt>Қолда бар көлем</dt><dd>1 860 л</dd></div>
+            </dl>
+          </article>
+
+          <article class="panel modules-card">
+            <div class="panel-title-row">
+              <h2>Ішкі / сыртқы модульдер</h2>
+              <button type="button" class="icon-button" data-section-link="modules" aria-label="Модульдер бөлімін ашу">↗</button>
+            </div>
+            <div class="sensor-grid">
+              <div><span>🌡 Температура</span><strong data-live="temp">18.2°C</strong></div>
+              <div><span>💧 Ылғалдылық</span><strong data-live="humidity">55%</strong></div>
+              <div><span>〰 Жел</span><strong data-live="wind">3 м/с</strong></div>
+              <div><span>◉ Қысым</span><strong id="pressureValue">1012 hPa</strong></div>
+              <div><span>☀ UV индексі</span><strong id="uvDashValue">2</strong></div>
+              <div><span>🍃 AQI</span><strong id="aqiDashValue">28</strong></div>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <section id="rain" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Tipping bucket сенсоры</p><h1>Жауын мониторингі</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="detail-grid">
+          <article class="panel wide"><h2>24 сағаттық жауын</h2><canvas id="rainDetailChart" width="900" height="300"></canvas></article>
+          <article class="panel"><h2>Өлшеу деректері</h2><dl class="kv-list"><div><dt>Қарқын</dt><dd id="rainRateDetail">0.3 мм/сағ</dd></div><div><dt>Тәуліктік көлем</dt><dd id="rainDailyDetail">12.4 мм</dd></div><div><dt>Соңғы импульс</dt><dd id="rainPulseDetail">15:35</dd></div><div><dt>Дәлдік</dt><dd>±0.2 мм</dd></div></dl></article>
+        </div>
+      </section>
+
+      <section id="forecast" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Болжам және шешім қабылдау</p><h1>Ауа райы болжамы</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="panel"><div class="forecast-row large" id="forecastLarge"></div><div class="ai-note" id="aiSuggestionsDetail"><strong>Алгоритм шешімі</strong><ul class="ai-suggestions" id="aiSuggestionsDetailList"></ul></div></div>
+      </section>
+
+      <section id="irrigation" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Смарт суару</p><h1>Автоматты суару</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="detail-grid">
+          <article class="panel wide">
+            <h2>Суару аймақтары</h2>
+            <div class="zones large" id="zonesLarge"></div>
+          </article>
+          <article class="panel">
+            <h2>Ылғалдылық шегі</h2>
+            <label class="range-label" for="soilRange">Топырақ ылғалдылығы <strong id="soilRangeValue">48%</strong></label>
+            <input id="soilRange" type="range" min="20" max="85" value="48">
+            <p class="muted">Шек төмендеген кезде жүйе суару уақытын және цистернадағы суды автоматты есептейді.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="water" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Жер асты цистернасы</p><h1>Су деңгейі және сапасы</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="detail-grid">
+          <article class="panel wide"><h2>Су қорының динамикасы <span class="chart-city" id="waterChartCity"></span></h2><canvas id="waterChart" width="900" height="300"></canvas></article>
+          <article class="panel"><h2>Сүзу сатылары</h2><ul class="check-list"><li>Механикалық алдын ала сүзу</li><li>Көмірлі сүзгі</li><li>УФ тазарту блогы</li><li>Сапа сенсоры арқылы бақылау</li></ul></article>
+        </div>
+      </section>
+
+      <section id="solar" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Энергетикалық автономия</p><h1>Күн энергиясы</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="detail-grid">
+          <article class="panel wide"><h2>Күн панелі өндірісі <span class="chart-city" id="solarDetailChartCity"></span></h2><canvas id="solarDetailChart" width="900" height="300"></canvas></article>
+          <article class="panel"><h2>Энергия балансы</h2><dl class="kv-list"><div><dt>Қазіргі қуат</dt><dd id="solarPowerDetail">285 W</dd></div><div><dt>Тазарту блогы</dt><dd id="filterPowerDetail">92 W</dd></div><div><dt>Суару сорғысы</dt><dd id="pumpPowerDetail">110 W</dd></div><div><dt>Көміртек ізі</dt><dd class="good" id="carbonFootprintDetail">Төмен</dd></div></dl></article>
+        </div>
+      </section>
+
+      <section id="modules" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Сенсорлық орта</p><h1>Ішкі / сыртқы модульдер</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="panel"><div class="sensor-grid large"><div><span>🌡 Сыртқы температура</span><strong id="outsideTempValue">18.2°C</strong></div><div><span>🏠 Ішкі температура</span><strong id="insideTempValue">23.7°C</strong></div><div><span>💧 Ауа ылғалдылығы</span><strong id="modulesHumidityValue">55%</strong></div><div><span>〰 Жел жылдамдығы</span><strong id="modulesWindValue">3 м/с</strong></div><div><span>☀ UV индексі</span><strong id="uvValue">2</strong></div><div><span>🍃 Ауа сапасы</span><strong id="aqiValue">28 AQI</strong></div></div></div>
+      </section>
+
+      <section id="analytics" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Экологиялық және әлеуметтік-экономикалық тиімділік</p><h1>Аналитика</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="analytics-grid">
+          <article class="panel"><h2>Су үнемі</h2><strong class="big-number" id="analyticsWaterSaved">542.3 л</strong><p>Орталықтандырылған ауыз суға түсетін жүктемені азайту.</p></article>
+          <article class="panel"><h2>Беткі ағын</h2><strong class="big-number" id="analyticsRunoff">−31%</strong><p>Нөсерлік су тасқу қаупін төмендетуге көмектеседі.</p></article>
+          <article class="panel"><h2>Энергия</h2><strong class="big-number" id="analyticsEnergy">2.45 кВт·сағ</strong><p>Күн энергиясы арқылы автономды жұмыс істеу.</p></article>
+          <article class="panel"><h2>Пилоттық аймақтар</h2><p>Тұрғын үй кешендері, университет кампустары, мектептер, саябақтар және қоғамдық нысандар.</p></article>
+        </div>
+      </section>
+
+      <section id="journal" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Оқиғалар тарихы</p><h1>Жүйе журналы</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="panel"><ul class="timeline large"><li><time>15:42</time><span>Суару жүйесі автоматты режимде қосылды</span></li><li><time>15:35</time><span>Tipping bucket сенсоры 0.3 мм жауын тіркеді</span></li><li><time>15:20</time><span>Резервуар деңгейі 62% болды</span></li><li><time>15:10</time><span>Күн панелі қуаты 270 W-қа жетті</span></li><li><time>14:55</time><span>УФ тазарту блогы тексерілді</span></li><li><time>14:30</time><span>AI суару ұсынысы жаңартылды</span></li></ul></div>
+      </section>
+
+      <section id="contact" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Авторлармен байланыс</p><h1>Байланыс және хабарласу</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="contact-grid">
+          <article class="panel contact-card contact-card--instagram">
+            <div class="contact-card-head">
+              <span class="contact-icon" aria-hidden="true">📷</span>
+              <div>
+                <h2>Instagram</h2>
+                <p>Автор парақшасына өту</p>
+              </div>
+            </div>
+            <a class="contact-action contact-action--instagram" href="https://www.instagram.com/caeluvii/" target="_blank" rel="noopener">
+              <span class="contact-action-icon" aria-hidden="true">↗</span>
+              Instagram ашу
+            </a>
+          </article>
+          <article class="panel contact-card contact-card--whatsapp">
+            <div class="contact-card-head">
+              <span class="contact-icon" aria-hidden="true">💬</span>
+              <div>
+                <h2>WhatsApp</h2>
+                <p>87766193034 нөміріне хабарлама жіберу</p>
+              </div>
+            </div>
+            <a class="contact-action contact-action--whatsapp" href="https://wa.me/77766193034" target="_blank" rel="noopener">
+              <span class="contact-action-icon" aria-hidden="true">↗</span>
+              WhatsApp жазу
+            </a>
+          </article>
+          <article class="panel contact-card contact-card--phone">
+            <div class="contact-card-head">
+              <span class="contact-icon" aria-hidden="true">📞</span>
+              <div>
+                <h2>Хабарласу</h2>
+                <p>Жоба бойынша ұсыныс немесе сұрақ жіберу</p>
+              </div>
+            </div>
+            <a class="contact-action contact-action--phone" href="tel:+77766193034">
+              <span class="contact-action-icon" aria-hidden="true">☎</span>
+              Қоңырау шалу
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section id="settings" class="view detail-view">
+        <div class="section-head">
+          <div><p class="eyebrow">Басқару параметрлері</p><h1>Параметрлер</h1></div>
+          <button class="ghost-button" data-section-link="dashboard">Панельге қайту</button>
+        </div>
+        <div class="settings-grid enhanced">
+          <article class="panel">
+            <h2>Режим</h2>
+            <div class="segmented" id="modeControl">
+              <button class="active" data-mode="Авто">Авто</button>
+              <button data-mode="Қолмен">Қолмен</button>
+              <button data-mode="Үнемдеу">Үнемдеу</button>
+            </div>
+            <p class="muted">Қолмен режимде суару аймақтарын және модульдерді өзіңіз қосып-өшіре аласыз.</p>
+          </article>
+
+          <article class="panel">
+            <h2>Аймақты таңдау</h2>
+            <label class="field-label" for="regionSelect">Қала</label>
+            <div class="select-field">
+              <select id="regionSelect">
+                <option value="almaty">Алматы</option>
+                <option value="astana">Астана</option>
+                <option value="shymkent">Шымкент</option>
+                <option value="oskemen">Өскемен</option>
+                <option value="aktau">Ақтау</option>
+              </select>
+              <span class="select-icon" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
+            </div>
+            <p class="muted">Қала өзгерсе, координата мен ауа райы деректері жаңартылады.</p>
+            <button class="ghost-button full" id="refreshWeather">Ауа райын жаңарту</button>
+          </article>
+
+          <article class="panel">
+            <h2>Ауа райы дерек көзі</h2>
+            <label class="field-label" for="providerSelect">Дерек провайдері</label>
+            <div class="select-field">
+              <select id="providerSelect">
+                <option value="openmeteo">Нақты дерек: Open-Meteo</option>
+                <option value="google">Google Weather API</option>
+                <option value="kazhydromet">Kazhydromet endpoint</option>
+                <option value="manual">Қолмен енгізу</option>
+              </select>
+              <span class="select-icon" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
+            </div>
+            <label class="field-label" for="apiKeyInput">Google API key</label>
+            <input id="apiKeyInput" type="password" placeholder="Google Maps Platform key">
+            <label class="field-label" for="endpointInput">Kazhydromet / proxy endpoint</label>
+            <input id="endpointInput" type="url" placeholder="https://...">
+            <p class="muted">Google үшін ресми Weather API key қажет. Kazhydromet үшін JSON endpoint немесе өз proxy серверіңіз енгізіледі.</p>
+          </article>
+
+          <article class="panel" id="manualMetricsPanel">
+            <h2>Ақпараттарды өзгерту</h2>
+            <p class="muted">Сандарды өзгертіңіз, содан кейін «Өзгерісті сақтау» батырмасын басыңыз.</p>
+            <div class="form-grid">
+              <label>Су қоры, %<input id="waterLevelInput" type="number" min="0" max="100" value="62"></label>
+              <label>Топырақ ылғалдылығы, %<input id="soilInput" type="number" min="0" max="100" value="48"></label>
+              <label>Күн энергиясы, W<input id="solarInput" type="number" min="0" value="285"></label>
+              <label>Бүгінгі жауын, мм<input id="rainInput" type="number" min="0" step="0.1" value="12.4"></label>
+              <label>Температура, °C<input id="tempInput" type="number" step="0.1" value="18"></label>
+              <label>Ішкі температура, °C<input id="insideTempInput" type="number" step="0.1" value="23.7"></label>
+              <label>Ылғалдылық, %<input id="humidityInput" type="number" min="0" max="100" value="55"></label>
+              <label>Жел, м/с<input id="windInput" type="number" min="0" step="0.1" value="3"></label>
+              <label>Жауын ықтималдығы, %<input id="rainChanceInput" type="number" min="0" max="100" value="40"></label>
+              <label>Су температурасы, °C<input id="waterTempInput" type="number" step="0.1" value="17.3"></label>
+              <label>Ауа қысымы, hPa<input id="pressureInput" type="number" min="850" max="1100" value="1012"></label>
+              <label>UV индексі<input id="uvInput" type="number" min="0" max="12" value="2"></label>
+              <label>AQI<input id="aqiInput" type="number" min="0" max="500" value="28"></label>
+              <label>Су сапасы<input id="waterQualityInput" type="text" value="Жақсы"></label>
+            </div>
+            <button class="ghost-button full" id="saveMetrics">Өзгерісті сақтау</button>
+          </article>
+
+          <article class="panel">
+            <h2>Тіл және көрініс</h2>
+            <label class="field-label" for="languageSelect">Сайт тілі</label>
+            <div class="select-field">
+              <select id="languageSelect">
+                <option value="kk">Қазақша</option>
+                <option value="ru">Русский</option>
+              </select>
+              <span class="select-icon" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
+            </div>
+            <label class="field-label" for="themeSelect">Фон / тақырып</label>
+            <div class="select-field">
+              <select id="themeSelect">
+                <option value="dark">Қара көк</option>
+                <option value="green">Экологиялық жасыл</option>
+                <option value="light">Жарық режим</option>
+                <option value="narxoz">Нархоз университеті</option>
+                <option value="custom">Өз фоным</option>
+              </select>
+              <span class="select-icon" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
+            </div>
+            <div id="customThemePanel" class="custom-theme-panel" hidden>
+              <label class="field-label" id="customBgTypeLabel">Өз фон түрі</label>
+              <div class="segmented dual" id="customBgTypeControl">
+                <button type="button" class="active" data-custom-bg="color">Түс / gradient</button>
+                <button type="button" data-custom-bg="photo">Фото</button>
+              </div>
+              <div id="customColorPanel">
+                <label class="field-label" for="customColorInput">Кез келген түс</label>
+                <input id="customColorInput" type="color" value="#0b1525">
+                <label class="field-label" for="customBgInput">CSS gradient (міндетті емес)</label>
+                <input id="customBgInput" type="text" placeholder="linear-gradient(160deg, #050b13, #0b1d31)">
+              </div>
+              <div id="customPhotoPanel" hidden>
+                <label class="field-label" for="customPhotoInput">Фото арқылы фон</label>
+                <input id="customPhotoInput" type="file" accept="image/*">
+                <p class="muted" id="customPhotoHint">JPG, PNG немесе WEBP жүктей аласыз.</p>
+              </div>
+            </div>
+            <p class="muted">Таңдалған тіл мен фон браузер жадында сақталады.</p>
+          </article>
+
+          <article class="panel manual-only" id="manualModulesPanel">
+            <h2>Модульдерді қолмен басқару</h2>
+            <p class="muted">Модульдерді қосу немесе өшіру үшін режимді “Қолмен” күйіне ауыстырыңыз.</p>
+            <label class="check-row"><input class="module-toggle" data-module="rain" type="checkbox" checked> Жауын сенсоры</label>
+            <label class="check-row"><input class="module-toggle" data-module="filter" type="checkbox" checked> Сүзу блогы</label>
+            <label class="check-row"><input class="module-toggle" data-module="solar" type="checkbox" checked> Күн панелі</label>
+            <label class="check-row"><input class="module-toggle" data-module="irrigation" type="checkbox" checked> Автоматты суару</label>
+            <div class="zone-editor">
+              <label>Аймақ 1 атауы<input class="zone-name-input" data-zone-name="0" type="text" value="Аймақ 1"></label>
+              <label>Аймақ 2 атауы<input class="zone-name-input" data-zone-name="1" type="text" value="Аймақ 2"></label>
+              <label>Аймақ 3 атауы<input class="zone-name-input" data-zone-name="2" type="text" value="Аймақ 3"></label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <h2>Хабарландырулар</h2>
+            <label class="check-row"><input type="checkbox" checked> Су деңгейі төмендегенде ескерту</label>
+            <label class="check-row"><input type="checkbox" checked> Жауын тіркелгенде хабарлау</label>
+            <label class="check-row"><input type="checkbox"> API қатесі болса журналға жазу</label>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="infoDialog">
+    <button class="dialog-close" aria-label="Жабу">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="app.js"></script>
+</body>
+</html>
